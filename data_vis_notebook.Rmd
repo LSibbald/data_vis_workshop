@@ -278,5 +278,50 @@ ggplot(data = Harman_long, aes(x = Var1, y = Var2, fill = Correlation)) +
   geom_text(aes(label = round(Correlation, 2)), color = "black", size=3)
   
 ```
+### Export Your Graphs
 
+After creating your graph, you might also want to export it to a place on your computer so you can use it somewhere else.
+Say you want to store the heatmap plot I just created above. First you have to think of a name and a place on your computer where you want to store it.
 
+```{r}
+# create mapping and store graph in a ggplot graph object called "test_heatmap"
+test_heatmap = ggplot(data = Harman_long, aes(x = Var1, y = Var2, fill = Correlation)) +
+  # create heatmap and include black lines between the tiles
+  geom_tile(color="black") +
+  # delete x and y axis labels
+  labs(x=NULL, y=NULL) +
+  # change color scheme, make the lowerpoint of the colors/legend 0
+  scale_fill_gradient2(low = "white", high = "red", mid = "orange", midpoint = 0.5, 
+                       limits = c(0, 1)) +
+# remove the grid panels in the back and make the background white
+  theme(panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  # add the correlation values to the plot, specify text color and size
+  geom_text(aes(label = round(Correlation, 2)), color = "black", size=3)
+```
+
+Now save your plot:
+```{r}
+# state the name of your image, include the graph object and specify the desired location. Ofcourse replace my path
+#with you own path. 
+ggsave(filename = "heatmap.jpeg", plot = test_heatmap, path = "C:/Users/lsibbald/Documents/DataVisWorkshop")
+```
+Now it is saved! However, it could be that you're not happy with the current dimensions of the image.
+Luckily, it is possible to adjust the height and width of your image.
+
+```{r}
+# state the name of your image, include the graph object and specify the desired location. Ofcourse replace my path
+#with you own path. Include the height/width of your image + provide units="cm"
+ggsave(filename = "heatmap.jpeg", plot = test_heatmap, path = "C:/Users/lsibbald/Documents/DataVisWorkshop",
+			 width = 20, height = 10, units = "cm")
+```
+
+#### final notes:
+
+In this notebook we only covered a few options of what is possible in ggplot.
+You can find more graphs at https://r-graph-gallery.com/ggplot2-package.html
+
+I also recommend looking at the ggplot cheatsheet: https://posit.co/resources/cheatsheets/?type=posit-cheatsheets&_page=2/
+
+Happy plotting!
