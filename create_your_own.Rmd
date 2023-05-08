@@ -1,0 +1,74 @@
+---
+title: "create_your_own"
+output: html_document
+date: "2023-05-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Set-up
+```{r}
+# list of packages to check and install if not installed
+packages <- c("tidyverse", "psych", "haven")
+
+# install packages that are not yet installed and load them
+# loop over packages in the packages list
+for (package in packages){
+  # save a "TRUE" if the package is installed, save a "FALSE" when a package is not installed
+  installed <- require(package, character.only = TRUE)
+  # if the package is not installed, install it
+  if (!installed){
+    install.packages(package, dependencies = TRUE)
+  }
+  # load packages
+  library(package, character.only = TRUE)
+}
+```
+
+### Import your data
+```{r}
+# read in your data here if its an spss file you can use this code
+# you do have to replace "your_data.sav" with your own file
+df <- read_spss("your_data.sav")
+
+# inspect you data
+head(df)
+```
+
+### Create your plot
+but first: think about what you want to show and which variables you need for that
+next think about what type of graph best suits your goal.
+
+```{r}
+# start with the mapping of ggplot, change the code so it fits your data/idea
+# the color and size are optional, even y could be optional.
+ggplot(data = df, mapping = aes(x=x, y=y, size=z, color=a)) +
+	# add your geom function
+	geom_point() +
+	# add labels on your x and y axis
+	labs(x="X", y="Y", title="My Graph") +
+	# specify a theme 
+	theme_classic()
+
+# maybe try further customize you graph, adjust legend titles, colors, shapes of the dots etc. https://ggplot2.tidyverse.org/reference/geom_point.html
+```
+
+### export your graph
+```{r}
+# first store the graph you just made in an object
+myplot <- ggplot(data = df, mapping = aes(x=x, y=y, size=z, color=a)) +
+	# add your geom function
+	geom_point() +
+	# add labels on your x and y axis
+	labs(x="X", y="Y", title="My Graph") +
+	# specify a theme 
+	theme_classic()
+
+# state the name of your image, include the graph object and specify the desired location. Ofcourse replace my path
+#with you own path. Include the height/width of your image + provide units="cm"
+ggsave(filename = "myplot.jpeg", plot = myplot, path = "C:/Users/lsibbald/Documents/DataVisWorkshop",
+			 width = 20, height = 10, units = "cm")
+```
+
