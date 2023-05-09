@@ -166,7 +166,7 @@ ggplot(data = bfi, mapping = aes(x=sum_extra, y=sum_open, color=education)) +
   scale_color_discrete("Education Type")
 ```
 
-Now the colors com from a default scale, but you can also use different build in scales: http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually)
+Now the colors com from a default scale, but you can also use different build in scales: http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually). Note: there are also colorblind-friendly palettes available. See http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
 
 ```{r}
 # create mapping and add that the dot color should depend on education
